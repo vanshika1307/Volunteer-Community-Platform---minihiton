@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import Register from "./pages/register";
 import Logi from "./pages/login";
 import VolunteerProfile from './pages/VolunteerProfile';
+import VolunteerSearchPage from './pages/VolunteerSearchPage'
 
 const App = () => {
   return (
@@ -43,7 +44,7 @@ const App = () => {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
-
+            <Route path="/vol" element={<VolunteerSearchPage />} />
             <Route path="/login" element={<Logi />} />              
             <Route path='/Profile' element={<VolunteerProfile />} />
 

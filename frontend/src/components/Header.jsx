@@ -13,12 +13,13 @@ import {
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { ColorModeContext } from "../utils/ColorModeProvider";
 import EventNotifications from './EventNotifications';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
 
   const headerVariants = {
     hidden: { y: -100, opacity: 0 },
@@ -46,6 +47,10 @@ const Header = () => {
         duration: 0.5,
       },
     },
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
@@ -76,11 +81,10 @@ const Header = () => {
               variants={itemVariants}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              {["Home", "Map", "EventCalender", "Contact"].map((item) => (
+              {["Home", "Map", "EventCalendar", "Contact"].map((item) => (
                 <MuiButton
                   key={item}
-                  component={Link}
-                  to={`/${item.toLowerCase()}`}
+                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
                   color="inherit"
                   sx={{
                     ml: 2,
@@ -97,8 +101,7 @@ const Header = () => {
               {!isMobile && (
                 <>
                   <MuiButton
-                    component={Link}
-                    to="/login"
+                    onClick={() => handleNavigation("/login")}
                     color="inherit"
                     sx={{
                       ml: 2,
@@ -112,8 +115,7 @@ const Header = () => {
                     Login
                   </MuiButton>
                   <MuiButton
-                    component={Link}
-                    to="/register"
+                    onClick={() => handleNavigation("/register")}
                     color="inherit"
                     sx={{
                       ml: 2,

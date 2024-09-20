@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { TextField, Button, Typography, Grid, FormControl, InputLabel, Select, MenuItem, Slider } from '@mui/material';
 import VolunteerOpportunityCard from '../components/VolunteerOpportunityCard'; // Make sure to import the new component
-
+import { useNavigate } from 'react-router-dom';
 
 // Expanded mock data for volunteer opportunities
 const mockOpportunities = [
