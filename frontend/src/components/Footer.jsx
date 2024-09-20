@@ -93,7 +93,7 @@ const Footer = () => {
         </Grid>
         <Box mt={5}>
           <Typography variant="body2" color="textSecondary" align="center">
-            © {new Date().getFullYear()} Vworld. All rights reserved.
+            © {new Date().getFullYear()} We World. All rights reserved.
           </Typography>
         </Box>
       </Container>

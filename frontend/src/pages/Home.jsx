@@ -17,17 +17,17 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: "John Doe",
+      name: "Suresh Raina",
       text: "This organization has changed my life. The events are well-organized and impactful.",
       image: "/src/assets/testimonial1.jpg",
     },
     {
-      name: "Jane Smith",
+      name: "Jashmin Tiwari",
       text: "Volunteering here has been a rewarding experience. I've met so many wonderful people.",
       image: "/src/assets/testimonial2.jpg",
     },
     {
-      name: "Sam Wilson",
+      name: "Deep Pandey",
       text: "I've been a part of this community for years, and it just keeps getting better.",
       image: "/src/assets/testimonial3.jpg",
     },
@@ -100,7 +100,7 @@ const Home = () => {
           className="relative z-10 text-center mb-8 px-4"
         >
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            Welcome to Your Website
+            Welcome to We World
           </h1>
           <p className="text-lg md:text-2xl text-white mb-8">
             Discover amazing content and join our community.

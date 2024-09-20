@@ -3,6 +3,7 @@ import { Box, Typography, Grid, Card, CardContent, CardMedia, Paper, Container, 
 import { motion } from 'framer-motion';
 import { PlayCircleOutline, EmojiEvents, People, Favorite } from '@mui/icons-material';
 import ParkIcon from '@mui/icons-material/Park';
+import { Link } from 'react-router-dom';
 
 const videoList = [
   { title: 'Community Beach Cleanup', videoUrl: 'https://www.youtube.com/embed/Pg3YICJvfFE', description: 'Join our volunteers as they clean up local beaches and protect marine life.' },
@@ -113,6 +114,7 @@ const EducationTraining = () => {
                       <Typography variant="body2" color="text.secondary">{video.description}</Typography>
                     </CardContent>
                     <Box sx={{ p: 2 }}>
+                      
                       <Button 
                         variant="contained" 
                         startIcon={<PlayCircleOutline />} 
@@ -144,6 +146,7 @@ const EducationTraining = () => {
             <Typography variant="body1" sx={{ mb: 4, color: '#666', maxWidth: '600px', margin: '0 auto' }}>
               Be part of our mission to create positive change in our community. Every volunteer, every donation, and every action counts.
             </Typography>
+            <Link to='/volsignup'>
             <Button 
               variant="contained" 
               size="large" 
@@ -165,6 +168,8 @@ const EducationTraining = () => {
             >
               Volunteer Now
             </Button>
+            </Link>
+            <Link to='/donate'>
             <Button 
               variant="outlined" 
               size="large" 
@@ -183,6 +188,7 @@ const EducationTraining = () => {
             >
               Donate
             </Button>
+            </Link>
           </Box>
         </Box>
       </Container>

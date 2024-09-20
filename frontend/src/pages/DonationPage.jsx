@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const causes = [
-  { id: 1, title: 'Flood Relief', description: 'Help provide essential supplies to flood victims.', goal: 10000, raised: 7500, image: '/api/placeholder/400/300' },
-  { id: 2, title: 'Disaster Recovery', description: 'Support recovery efforts after natural disasters.', goal: 15000, raised: 9000, image: '/api/placeholder/400/300' },
-  { id: 3, title: 'Wildfire Relief', description: 'Aid those affected by wildfires.', goal: 12000, raised: 6000, image: '/api/placeholder/400/300' },
+  { id: 1, title: 'Flood Relief', description: 'Help provide essential supplies to flood victims.', goal: 10000, raised: 7500, image: '/flood.jpg' },
+  { id: 2, title: 'Disaster Recovery', description: 'Support recovery efforts after natural disasters.', goal: 15000, raised: 9000, image: '/earth.jpg' },
+  { id: 3, title: 'Wildfire Relief', description: 'Aid those affected by wildfires.', goal: 12000, raised: 6000, image: '/fire.png' },
 ];
 
 const DonationPage = () => {

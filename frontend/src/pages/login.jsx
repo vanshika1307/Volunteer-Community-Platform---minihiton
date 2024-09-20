@@ -8,9 +8,9 @@ function Login() {
     <div className="flex flex-col md:flex-row h-full flex-grow">
       {/* Left Section */}
       <div className="flex-[0.3] bg-[#2d294e] text-white flex flex-col items-center justify-center ">
-        <div className="text-2xl mb-5">FOXHUB</div>
+        <div className="text-4xl mb-5 py-9">WeWorld</div>
         <img
-          src="/src/assets/Template 2/input/Template 2/div/Light-brown-in-Jacket10.png"
+          src="/Light-brown-in-Jacket10.png"
           alt="Handshake"
           className="max-w-full h-auto mb-5"
         />
@@ -25,12 +25,12 @@ function Login() {
 
       {/* Right Section */}
       <div
-        className={`flex-[0.7] p-10 flex flex-col justify-center ${
+        className={`flex-[0.7] p-10 flex flex-col  ${
           theme.palette.mode === "dark" ? "bg-[#0d0d0d]" : "bg-gray-100"
         }`}
       >
         <div className="flex justify-between mb-5">
-          <a href="/" className="text-black text-sm">
+          <a href="/" className="text-gray-600 text-sm">
             Return Home
           </a>
           <a href="/register" className="text-gray-600 text-sm">
@@ -46,7 +46,7 @@ function Login() {
             <div className="space-y-2">
               <input
                 type="email"
-                placeholder="example@email.com"
+                placeholder="email"
                 className={`w-full p-2 border ${
                   theme.palette.mode === "dark"
                     ? "border-gray-600 bg-gray-700 text-white"
@@ -57,7 +57,7 @@ function Login() {
             <div className="space-y-2">
               <input
                 type="password"
-                placeholder="**********"
+                placeholder=""
                 className={`w-full p-2 border ${
                   theme.palette.mode === "dark"
                     ? "border-gray-600 bg-gray-700 text-white"
