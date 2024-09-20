@@ -76,7 +76,7 @@ const Header = () => {
               variants={itemVariants}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              {["Home", "About", "EventCalender", "Contact"].map((item) => (
+              {["Home", "Map", "EventCalender", "Contact"].map((item) => (
                 <MuiButton
                   key={item}
                   component={Link}
