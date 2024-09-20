@@ -5,10 +5,10 @@ import { PlayCircleOutline, EmojiEvents, People, Favorite } from '@mui/icons-mat
 import ParkIcon from '@mui/icons-material/Park';
 
 const videoList = [
-  { title: 'Community Beach Cleanup', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', description: 'Join our volunteers as they clean up local beaches and protect marine life.' },
-  { title: 'Volunteer Training Workshop', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', description: 'Learn about our comprehensive training program for new volunteers.' },
-  { title: 'Tree Planting Initiative', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', description: 'Watch our team plant trees to combat deforestation and climate change.' },
-  { title: 'Food Drive Success Story', videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', description: 'See the impact of our recent food drive on local communities in need.' },
+  { title: 'Community Beach Cleanup', videoUrl: 'https://www.youtube.com/embed/Pg3YICJvfFE', description: 'Join our volunteers as they clean up local beaches and protect marine life.' },
+  { title: 'Volunteer Training Workshop', videoUrl: 'https://www.youtube.com/embed/2szQhR4oZtA?si=wVQtm8VKXUogHimW', description: 'Learn about our comprehensive training program for new volunteers.' },
+  { title: 'Tree Planting Initiative', videoUrl: 'https://www.youtube.com/embed/jXcoPO76UyA', description: 'Watch our team plant trees to combat deforestation and climate change.' },
+  { title: 'Food Drive Success Story', videoUrl: 'https://www.youtube.com/embed/toc3iKI6CA4?list=PLgUKbeXMb5dpRJBCMQj9SGRHntN8_ufNg', description: 'See the impact of our recent food drive on local communities in need.' },
 ];
 
 const achievements = [
