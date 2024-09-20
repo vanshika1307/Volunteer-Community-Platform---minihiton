@@ -8,119 +8,55 @@ import {
   Email, EmojiEvents, AccessTime, 
   CalendarToday, LocationOn, Favorite, Star
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
 
 // Mock data for volunteers
 const volunteers = [
   { 
     id: 1, 
-    name: 'Jane Doe', 
-    email: 'jane.doe@example.com', 
+    name: 'Vanshika Jain', 
+    email: 'abc@example.com', 
     credits: 150,
     hours: 75,
     events: 12,
-    location: 'New York, NY',
+    location: 'India',
     interests: ['Education', 'Environment'],
     badge: 'Silver'
   },
   { 
     id: 2, 
-    name: 'John Smith', 
-    email: 'john.smith@example.com', 
+    name: 'Garv Jain', 
+    email: 'xyz.@example.com', 
     credits: 80,
     hours: 40,
     events: 8,
-    location: 'Los Angeles, CA',
+    location: 'Borivali',
     interests: ['Healthcare', 'Animal Welfare'],
     badge: 'Bronze'
   },
   { 
     id: 3, 
-    name: 'Alice Johnson', 
-    email: 'alice.johnson@example.com', 
+    name: 'Swar Mhatre', 
+    email: 'apo.@example.com', 
     credits: 220,
     hours: 110,
     events: 18,
-    location: 'Chicago, IL',
+    location: 'Mira Road',
     interests: ['Poverty Alleviation', 'Education'],
     badge: 'Gold'
   },
   { 
     id: 4, 
-    name: 'Bob Wilson', 
-    email: 'bob.wilson@example.com', 
+    name: 'Sannit Arekar ', 
+    email: 'sannu.@example.com', 
     credits: 175,
     hours: 87,
     events: 14,
-    location: 'Houston, TX',
+    location: 'Andheri',
     interests: ['Youth Development', 'Sports'],
     badge: 'Silver'
   },
-  { 
-    id: 5, 
-    name: 'Emma Brown', 
-    email: 'emma.brown@example.com', 
-    credits: 300,
-    hours: 150,
-    events: 25,
-    location: 'San Francisco, CA',
-    interests: ['Technology', 'Arts'],
-    badge: 'Platinum'
-  },
-  { 
-    id: 6, 
-    name: 'Michael Lee', 
-    email: 'michael.lee@example.com', 
-    credits: 90,
-    hours: 45,
-    events: 9,
-    location: 'Seattle, WA',
-    interests: ['Environmental Conservation', 'Community Development'],
-    badge: 'Bronze'
-  },
-  { 
-    id: 7, 
-    name: 'Sarah Davis', 
-    email: 'sarah.davis@example.com', 
-    credits: 260,
-    hours: 130,
-    events: 22,
-    location: 'Boston, MA',
-    interests: ['Education', 'Mental Health'],
-    badge: 'Gold'
-  },
-  { 
-    id: 8, 
-    name: 'David Martinez', 
-    email: 'david.martinez@example.com', 
-    credits: 120,
-    hours: 60,
-    events: 10,
-    location: 'Miami, FL',
-    interests: ['Elderly Care', 'Disaster Relief'],
-    badge: 'Silver'
-  },
-  { 
-    id: 9, 
-    name: 'Olivia Taylor', 
-    email: 'olivia.taylor@example.com', 
-    credits: 350,
-    hours: 175,
-    events: 30,
-    location: 'Denver, CO',
-    interests: ['Youth Mentoring', 'Women Empowerment'],
-    badge: 'Platinum'
-  },
-  { 
-    id: 10, 
-    name: 'James Anderson', 
-    email: 'james.anderson@example.com', 
-    credits: 200,
-    hours: 100,
-    events: 16,
-    location: 'Phoenix, AZ',
-    interests: ['Homelessness', 'Veteran Support'],
-    badge: 'Gold'
-  }
+ 
 ];
 
 const badgeColors = {
@@ -132,6 +68,7 @@ const badgeColors = {
 
 const VolunteerProfile = () => {
   const theme = useTheme();
+  const navigate = useNavigate(); // Initialize useNavigate
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedBadge, setSelectedBadge] = useState(null);
 
@@ -236,7 +173,13 @@ const VolunteerProfile = () => {
                   </Box>
                 </CardContent>
                 <CardActions sx={{ mt: 'auto', justifyContent: 'center' }}>
-                  <Button size="small" startIcon={<Star />}>View Profile</Button>
+                  <Button 
+                    size="small" 
+                    startIcon={<Star />} 
+                    onClick={() => navigate('/dashboard')} // Navigate to Dashboard page
+                  >
+                    View Profile
+                  </Button>
                 </CardActions>
               </Card>
             </motion.div>

@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { AccountCircle, AccessTime, Event } from '@mui/icons-material'; // Import Material-UI icons
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from React Router
 
 const variants = {
   visible: (i) => ({
@@ -24,11 +25,12 @@ const variants = {
 const Dashboard = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === 'dark';
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Mock data for the volunteer
   const volunteerInfo = {
-    name: "Jane Doe",
-    email: "jane.doe@example.com",
+    name: "Vanshika Jain",
+    email: "abc@example.com",
     totalHours: 150,
     totalEvents: 20,
     totalCredits: 150,
@@ -50,6 +52,7 @@ const Dashboard = () => {
             <p className={`text-${isDarkMode ? 'gray-400' : 'gray-600'}`}>{volunteerInfo.email}</p>
           </div>
         </div>
+     
       </motion.div>
 
       <motion.div
