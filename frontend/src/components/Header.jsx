@@ -4,16 +4,16 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   IconButton,
   useTheme,
   Container,
   useMediaQuery,
-  Link,
+  Button as MuiButton,
 } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { ColorModeContext } from "../utils/ColorModeProvider";
 import EventNotifications from './EventNotifications';
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const theme = useTheme();
@@ -76,9 +76,11 @@ const Header = () => {
               variants={itemVariants}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              {["Home", "About", "Services", "Contact"].map((item) => (
-                <Button
+              {["Home", "About", "EventCalender", "Contact"].map((item) => (
+                <MuiButton
                   key={item}
+                  component={Link}
+                  to={`/${item.toLowerCase()}`}
                   color="inherit"
                   sx={{
                     ml: 2,
@@ -90,14 +92,14 @@ const Header = () => {
                   }}
                 >
                   {item}
-                </Button>
+                </MuiButton>
               ))}
               {!isMobile && (
                 <>
-                  <Link
-                    href="/login"
+                  <MuiButton
+                    component={Link}
+                    to="/login"
                     color="inherit"
-                    underline="none"
                     sx={{
                       ml: 2,
                       borderRadius: "20px",
@@ -108,11 +110,11 @@ const Header = () => {
                     }}
                   >
                     Login
-                  </Link>
-                  <Link
-                    href="/register"
+                  </MuiButton>
+                  <MuiButton
+                    component={Link}
+                    to="/register"
                     color="inherit"
-                    underline="none"
                     sx={{
                       ml: 2,
                       borderRadius: "20px",
@@ -123,7 +125,7 @@ const Header = () => {
                     }}
                   >
                     Register
-                  </Link>
+                  </MuiButton>
                 </>
               )}
             </motion.nav>
