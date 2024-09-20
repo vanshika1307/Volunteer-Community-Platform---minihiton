@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Container, Paper, Typography, Grid, Button, 
-  FormControl, InputLabel, Select, MenuItem
+  FormControl, InputLabel, Select, MenuItem, Box, 
+  Card, CardContent, CardActions, Chip, useTheme, ThemeProvider, createTheme
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { motion, AnimatePresence } from 'framer-motion';
-import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from 'date-fns';
+import { format, parseISO, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday } from 'date-fns';
+import { ChevronLeft, ChevronRight, Event, LocationOn, Group } from '@mui/icons-material';
+
 
 const mockOpportunities = [
   {
@@ -21,7 +25,7 @@ const mockOpportunities = [
   },
   {
     id: 2,
-    title: "Teach English to Underprivileged Children",
+    title: "Teach English to Children",
     description: "Help children improve their English skills at a local community center.",
     location: "Pune",
     state: "Maharashtra",
@@ -128,13 +132,93 @@ const mockOpportunities = [
     longitude: 74.2433
   }
 ];
+// Create a custom theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1e88e5',
+    },
+    secondary: {
+      main: '#ff4081',
+    },
+    background: {
+      default: '#f5f5f5',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h4: {
+      fontWeight: 700,
+    },
+    h6: {
+      fontWeight: 600,
+    },
+  },
+  shape: {
+    borderRadius: 12,
+  },
+});
 
+const StyledContainer = styled(Container)(({ theme }) => ({
+  padding: theme.spacing(4),
+  backgroundColor: theme.palette.background.default,
+}));
+
+const CalendarHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: theme.spacing(3),
+  padding: theme.spacing(2),
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  borderRadius: theme.shape.borderRadius,
+}));
+
+const DayCell = styled(Paper)(({ theme, isCurrentMonth, isToday }) => ({
+  height: '120px',
+  overflow: 'auto',
+  padding: theme.spacing(1),
+  backgroundColor: isToday 
+    ? theme.palette.secondary.light 
+    : isCurrentMonth 
+      ? theme.palette.background.paper 
+      : theme.palette.action.disabledBackground,
+  borderRadius: theme.shape.borderRadius,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: theme.shadows[4],
+  },
+}));
+
+const EventButton = styled(Button)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  textTransform: 'none',
+  fontSize: '0.75rem',
+  padding: theme.spacing(0.5, 1),
+  borderRadius: theme.shape.borderRadius,
+}));
+
+const EventCard = styled(Card)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  boxShadow: theme.shadows[3],
+  borderRadius: theme.shape.borderRadius,
+  overflow: 'hidden',
+}));
+
+const EventCardHeader = styled(Box)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  padding: theme.spacing(2),
+}));
 
 const EventCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [filteredEvents, setFilteredEvents] = useState(mockOpportunities);
   const [filterCause, setFilterCause] = useState('');
   const [filterLocation, setFilterLocation] = useState('');
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const causes = [...new Set(mockOpportunities.map(op => op.cause))];
   const locations = [...new Set(mockOpportunities.map(op => op.location))];
@@ -170,98 +254,158 @@ const EventCalendar = () => {
   };
 
   return (
-    <Container maxWidth="lg">
-      <Typography variant="h4" align="center" gutterBottom>
-        Volunteer Opportunities Calendar
-      </Typography>
-      <Grid container spacing={2} mb={2}>
-        <Grid item xs={12} sm={6} md={3}>
-          <FormControl fullWidth>
-            <InputLabel>Filter by Cause</InputLabel>
-            <Select
-              value={filterCause}
-              onChange={(e) => setFilterCause(e.target.value)}
-            >
-              <MenuItem value="">All Causes</MenuItem>
-              {causes.map(cause => (
-                <MenuItem key={cause} value={cause}>{cause}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <FormControl fullWidth>
-            <InputLabel>Filter by Location</InputLabel>
-            <Select
-              value={filterLocation}
-              onChange={(e) => setFilterLocation(e.target.value)}
-            >
-              <MenuItem value="">All Locations</MenuItem>
-              {locations.map(location => (
-                <MenuItem key={location} value={location}>{location}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <Paper elevation={3} style={{ padding: '20px' }}>
-        <Grid container justifyContent="space-between" alignItems="center" mb={2}>
-          <Button onClick={handlePrevMonth}>&lt; Prev</Button>
-          <Typography variant="h5">
-            {format(currentMonth, 'MMMM yyyy')}
-          </Typography>
-          <Button onClick={handleNextMonth}>Next &gt;</Button>
-        </Grid>
-        <Grid container spacing={1}>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <Grid item xs={1.7} key={day}>
-              <Typography align="center" fontWeight="bold">{day}</Typography>
+    <ThemeProvider theme={theme}>
+      <StyledContainer maxWidth="lg">
+        <Typography variant="h4" align="center" gutterBottom color="primary">
+          Volunteer Opportunities Calendar
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <CalendarHeader>
+              <Button onClick={handlePrevMonth} startIcon={<ChevronLeft />} color="inherit">
+                Prev
+              </Button>
+              <Typography variant="h6">
+                {format(currentMonth, 'MMMM yyyy')}
+              </Typography>
+              <Button onClick={handleNextMonth} endIcon={<ChevronRight />} color="inherit">
+                Next
+              </Button>
+            </CalendarHeader>
+            <Grid container spacing={2} mb={2}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>Filter by Cause</InputLabel>
+                  <Select
+                    value={filterCause}
+                    onChange={(e) => setFilterCause(e.target.value)}
+                    label="Filter by Cause"
+                  >
+                    <MenuItem value="">All Causes</MenuItem>
+                    {causes.map(cause => (
+                      <MenuItem key={cause} value={cause}>{cause}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>Filter by Location</InputLabel>
+                  <Select
+                    value={filterLocation}
+                    onChange={(e) => setFilterLocation(e.target.value)}
+                    label="Filter by Location"
+                  >
+                    <MenuItem value="">All Locations</MenuItem>
+                    {locations.map(location => (
+                      <MenuItem key={location} value={location}>{location}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-          ))}
-          {daysInMonth.map((day, index) => (
-            <Grid item xs={1.7} key={day.toString()}>
-              <Paper 
-                elevation={1} 
-                style={{ 
-                  height: '100px', 
-                  overflow: 'auto', 
-                  padding: '5px',
-                  backgroundColor: day.getMonth() !== currentMonth.getMonth() ? '#f0f0f0' : 'white'
-                }}
-              >
-                <Typography align="center">{format(day, 'd')}</Typography>
-                <AnimatePresence>
-                  {filteredEvents
-                    .filter(event => format(parseISO(event.date), 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd'))
-                    .map(event => (
-                      <motion.div
-                        key={event.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Typography variant="caption" display="block" noWrap>
-                          {event.title}
+            <Grid container spacing={1}>
+              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                <Grid item xs={1.7} key={day}>
+                  <Typography align="center" fontWeight="bold" color="primary">
+                    {day}
+                  </Typography>
+                </Grid>
+              ))}
+              {daysInMonth.map((day) => (
+                <Grid item xs={1.7} key={day.toString()}>
+                  <DayCell 
+                    isCurrentMonth={isSameMonth(day, currentMonth)} 
+                    isToday={isToday(day)}
+                  >
+                    <Typography align="center" color={isToday(day) ? 'secondary' : 'textPrimary'}>
+                      {format(day, 'd')}
+                    </Typography>
+                    <AnimatePresence>
+                      {filteredEvents
+                        .filter(event => format(parseISO(event.date), 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd'))
+                        .map(event => (
+                          <motion.div
+                            key={event.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <EventButton 
+                              variant="contained" 
+                              size="small" 
+                              fullWidth
+                              color="secondary"
+                              onClick={() => setSelectedEvent(event)}
+                            >
+                              {event.title}
+                            </EventButton>
+                          </motion.div>
+                        ))
+                      }
+                    </AnimatePresence>
+                  </DayCell>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <AnimatePresence>
+              {selectedEvent && (
+                <motion.div
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <EventCard>
+                    <EventCardHeader>
+                      <Typography variant="h6">{selectedEvent.title}</Typography>
+                    </EventCardHeader>
+                    <CardContent>
+                      <Typography variant="body2" color="text.secondary" paragraph>
+                        {selectedEvent.description}
+                      </Typography>
+                      <Box display="flex" alignItems="center" mb={1}>
+                        <Event fontSize="small" color="primary" />
+                        <Typography variant="body2" ml={1}>
+                          {format(parseISO(selectedEvent.date), 'MMMM d, yyyy')}
                         </Typography>
-                        <Button 
-                          variant="outlined" 
-                          size="small" 
-                          fullWidth
-                          onClick={() => addToCalendar(event)}
-                        >
-                          Add to Calendar
-                        </Button>
-                      </motion.div>
-                    ))
-                  }
-                </AnimatePresence>
-              </Paper>
-            </Grid>
-          ))}
+                      </Box>
+                      <Box display="flex" alignItems="center" mb={1}>
+                        <LocationOn fontSize="small" color="primary" />
+                        <Typography variant="body2" ml={1}>
+                          {selectedEvent.location}, {selectedEvent.state}
+                        </Typography>
+                      </Box>
+                      <Box display="flex" alignItems="center" mb={1}>
+                        <Group fontSize="small" color="primary" />
+                        <Typography variant="body2" ml={1}>
+                          {selectedEvent.organization}
+                        </Typography>
+                      </Box>
+                      <Chip label={selectedEvent.cause} color="secondary" size="small" />
+                    </CardContent>
+                    <CardActions>
+                      <Button 
+                        size="small" 
+                        color="primary"
+                        variant="contained"
+                        onClick={() => addToCalendar(selectedEvent)}
+                        fullWidth
+                      >
+                        Add to Calendar
+                      </Button>
+                    </CardActions>
+                  </EventCard>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Grid>
         </Grid>
-      </Paper>
-    </Container>
+      </StyledContainer>
+    </ThemeProvider>
   );
 };
 
