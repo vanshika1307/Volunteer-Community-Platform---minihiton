@@ -13,6 +13,7 @@ import DonationPage from './pages/DonationPage';
 import EventNotifications from './components/EventNotifications';
 import Checkout from './components/Checkout';
 import Dashboard from './pages/Dashboard';
+import VolunteerProfile from './pages/VolunteerProfile';
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
               <Route path="/donate" element={<DonationPage />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path='/Dashboard' element={<Dashboard />} />
+              <Route path='/Profile' element={<VolunteerProfile />} />
 
             </Routes>
           <Footer />
