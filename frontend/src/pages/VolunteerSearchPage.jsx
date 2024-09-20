@@ -127,7 +127,7 @@ const mockOpportunities = [
     longitude: 74.2433
   }
 ];
-const navigate = useNavigate();
+
 // Function to calculate distance between two points using Haversine formula
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
   const R = 6371; // Radius of the Earth in km
@@ -142,6 +142,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 const VolunteerSearchPage = () => {
+  const navigate = useNavigate();
   const [opportunities, setOpportunities] = useState([]);
   const [filteredOpportunities, setFilteredOpportunities] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');

@@ -8,25 +8,23 @@ import {
   useTheme,
   Container,
   useMediaQuery,
-  Button as MuiButton,
 } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { ColorModeContext } from "../utils/ColorModeProvider";
-import EventNotifications from './EventNotifications';
-import { useNavigate } from "react-router-dom";
+import EventNotifications from "./EventNotifications";
 
 const Header = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const navigate = useNavigate();
 
   const headerVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { 
+      transition: {
         type: "spring",
         stiffness: 50,
         damping: 20,
@@ -47,10 +45,6 @@ const Header = () => {
         duration: 0.5,
       },
     },
-  };
-
-  const handleNavigation = (path) => {
-    navigate(path);
   };
 
   return (
@@ -81,56 +75,72 @@ const Header = () => {
               variants={itemVariants}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              {["Home", "Map", "EventCalendar", "Contact"].map((item) => (
-                <MuiButton
-                  key={item}
-                  onClick={() => handleNavigation(`/${item.toLowerCase()}`)}
-                  color="inherit"
-                  sx={{
-                    ml: 2,
-                    borderRadius: "20px",
-                    px: 2,
+              {[
+                { name: "Home", path: "/" },
+                { name: "Map", path: "/map" },
+                { name: "Event Calendar", path: "/eventcalendar" },
+                { name: "Community Dashboard", path: "/comdash" },
+                { name: "Education Training", path: "/edu" },
+                { name: "Donate", path: "/donate" },
+                { name: "Checkout", path: "/checkout" },
+                { name: "Dashboard", path: "/dashboard" },
+                { name: "Register", path: "/register" },
+                { name: "Volunteer Search", path: "/vol" },
+                { name: "Login", path: "/login" },
+                { name: "Profile", path: "/profile" },
+              ].map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    marginLeft: 16,
+                    borderRadius: 20,
+                    padding: "8px 16px",
                     "&:hover": {
                       backgroundColor: "rgba(255, 255, 255, 0.1)",
                     },
                   }}
                 >
-                  {item}
-                </MuiButton>
+                  {item.name}
+                </Link>
               ))}
-              {!isMobile && (
-                <>
-                  <MuiButton
-                    onClick={() => handleNavigation("/login")}
-                    color="inherit"
-                    sx={{
-                      ml: 2,
-                      borderRadius: "20px",
-                      px: 2,
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                      },
-                    }}
-                  >
-                    Login
-                  </MuiButton>
-                  <MuiButton
-                    onClick={() => handleNavigation("/register")}
-                    color="inherit"
-                    sx={{
-                      ml: 2,
-                      borderRadius: "20px",
-                      px: 2,
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                      },
-                    }}
-                  >
-                    Register
-                  </MuiButton>
-                </>
-              )}
             </motion.nav>
+            {!isMobile && (
+              <>
+                <Link
+                  to="/login"
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    marginLeft: 16,
+                    borderRadius: 20,
+                    padding: "8px 16px",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    },
+                  }}
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    marginLeft: 16,
+                    borderRadius: 20,
+                    padding: "8px 16px",
+                    "&:hover": {
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
+                    },
+                  }}
+                >
+                  Register
+                </Link>
+              </>
+            )}
             <motion.div variants={itemVariants}>
               <IconButton
                 sx={{
@@ -143,15 +153,11 @@ const Header = () => {
                 onClick={colorMode.toggleColorMode}
                 color="inherit"
               >
-                {theme.palette.mode === "dark" ? (
-                  <Brightness7 />
-                ) : (
-                  <Brightness4 />
-                )}
+                {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
             </motion.div>
             <motion.div variants={itemVariants}>
-                <EventNotifications/>
+              <EventNotifications />
             </motion.div>
           </Toolbar>
         </Container>
