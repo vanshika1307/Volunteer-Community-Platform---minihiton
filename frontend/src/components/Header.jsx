@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   AppBar,
   Toolbar,
@@ -11,8 +11,9 @@ import {
   Button,
   Menu,
   MenuItem,
+  Typography,
 } from "@mui/material";
-import { Brightness4, Brightness7, Menu as MenuIcon } from "@mui/icons-material";
+import { Brightness4, Brightness7, Menu as MenuIcon, ExpandMore } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { ColorModeContext } from "../utils/ColorModeProvider";
 import EventNotifications from "./EventNotifications";
@@ -20,47 +21,61 @@ import EventNotifications from "./EventNotifications";
 const Header = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Detect mobile screen
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [anchorEl, setAnchorEl] = useState(null); // Menu state for mobile
-  const open = Boolean(anchorEl);
+  const [mobileMenuAnchor, setMobileMenuAnchor] = useState(null);
+  const [dropdownAnchor, setDropdownAnchor] = useState(null);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const handleMobileMenuOpen = (event) => setMobileMenuAnchor(event.currentTarget);
+  const handleMobileMenuClose = () => setMobileMenuAnchor(null);
+  const handleDropdownOpen = (event) => setDropdownAnchor(event.currentTarget);
+  const handleDropdownClose = () => setDropdownAnchor(null);
 
   const headerVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 50,
-        damping: 20,
-        duration: 0.8,
-      },
+      transition: { type: "spring", stiffness: 50, damping: 20, duration: 0.8 },
     },
   };
 
-  const navItems = [
+  const menuItemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const mainNavItems = [
     { name: "Home", path: "/" },
     { name: "Map", path: "/map" },
     { name: "Event Calendar", path: "/eventcalendar" },
+    { name: "Donate", path: "/donate" },
+  ];
+
+  const dropdownItems = [
     { name: "Community Dashboard", path: "/comdash" },
     { name: "Education Training", path: "/edu" },
-    { name: "Donate", path: "/donate" },
-    { name: "Checkout", path: "/checkout" },
-    { name: "Dashboard", path: "/dashboard" },
-    { name: "Register", path: "/register" },
     { name: "Volunteer Search", path: "/vol" },
-    { name: "Login", path: "/login" },
     { name: "Profile", path: "/profile" },
   ];
+
+  const renderNavItems = (items, mobile = false) => {
+    return items.map((item) => (
+      <motion.div key={item.name} variants={menuItemVariants}>
+        <Button
+          component={Link}
+          to={item.path}
+          onClick={mobile ? handleMobileMenuClose : undefined}
+          sx={{
+            color: "inherit",
+            "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+          }}
+        >
+          {item.name}
+        </Button>
+      </motion.div>
+    ));
+  };
 
   return (
     <motion.div initial="hidden" animate="visible" variants={headerVariants}>
@@ -68,80 +83,68 @@ const Header = () => {
         position="static"
         elevation={0}
         sx={{
-          background:
-            theme.palette.mode === "dark"
-              ? "linear-gradient(45deg, #2A3EB1 30%, #4527A0 90%)"
-              : "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+          background: theme.palette.mode === "dark"
+            ? "linear-gradient(45deg, #2A3EB1 30%, #4527A0 90%)"
+            : "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
           borderRadius: "0 0 20px 20px",
         }}
       >
         <Container maxWidth="lg">
-          <Toolbar disableGutters sx={{ py: 1, justifyContent: "space-between" }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               {isMobile ? (
                 <>
-                  {/* Mobile Menu Button */}
                   <IconButton
                     edge="start"
                     color="inherit"
                     aria-label="menu"
-                    onClick={handleMenuOpen}
+                    onClick={handleMobileMenuOpen}
                   >
                     <MenuIcon />
                   </IconButton>
-                  {/* Mobile Dropdown Menu */}
                   <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleMenuClose}
-                    keepMounted
+                    anchorEl={mobileMenuAnchor}
+                    open={Boolean(mobileMenuAnchor)}
+                    onClose={handleMobileMenuClose}
                   >
-                    {navItems.map((item) => (
-                      <MenuItem
-                        key={item.name}
-                        component={Link}
-                        to={item.path}
-                        onClick={handleMenuClose}
-                      >
-                        {item.name}
-                      </MenuItem>
-                    ))}
+                    <AnimatePresence>
+                      {renderNavItems([...mainNavItems, ...dropdownItems], true)}
+                    </AnimatePresence>
                   </Menu>
                 </>
               ) : (
-                /* Desktop Navigation */
-                navItems.map((item) => (
+                <>
+                  {renderNavItems(mainNavItems)}
                   <Button
-                    key={item.name}
-                    component={Link}
-                    to={item.path}
-                    sx={{
-                      color: "inherit",
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                      },
-                    }}
+                    color="inherit"
+                    onClick={handleDropdownOpen}
+                    endIcon={<ExpandMore />}
                   >
-                    {item.name}
+                    More
                   </Button>
-                ))
+                  <Menu
+                    anchorEl={dropdownAnchor}
+                    open={Boolean(dropdownAnchor)}
+                    onClose={handleDropdownClose}
+                  >
+                    <AnimatePresence>
+                      {renderNavItems(dropdownItems)}
+                    </AnimatePresence>
+                  </Menu>
+                </>
               )}
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {/* Dark/Light Mode Toggle */}
               <IconButton
                 sx={{
                   backgroundColor: "rgba(255, 255, 255, 0.1)",
-                  "&:hover": {
-                    backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  },
+                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.2)" },
                 }}
                 onClick={colorMode.toggleColorMode}
                 color="inherit"
               >
                 {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
-              {/* Event Notifications */}
               <EventNotifications />
             </Box>
           </Toolbar>
