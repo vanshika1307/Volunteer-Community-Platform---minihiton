@@ -15,7 +15,7 @@ const ColorModeProvider = ({ children }) => {
         setTimeout(() => {
           setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
           setIsAnimating(false);
-        }, 600); // Half of the animation duration
+        }, 600); 
       },
     }),
     []

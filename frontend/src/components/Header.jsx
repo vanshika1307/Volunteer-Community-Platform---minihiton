@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { AppBar, Toolbar, Typography, Button, IconButton, useTheme, Container } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { ColorModeContext } from '../utils/ColorModeProvider';
+import EventNotifications from './EventNotifications';
 
 const Header = () => {
   const theme = useTheme();
@@ -14,8 +15,8 @@ const Header = () => {
       y: 0,
       opacity: 1,
       transition: { 
-        type: "spring", 
-        stiffness: 50, 
+        type: "spring",
+        stiffness: 50,
         damping: 20,
         duration: 0.8
       }
@@ -91,6 +92,9 @@ const Header = () => {
               >
                 {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+                <EventNotifications/>
             </motion.div>
           </Toolbar>
         </Container>
