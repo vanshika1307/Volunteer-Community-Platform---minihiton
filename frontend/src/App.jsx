@@ -15,6 +15,7 @@ import Checkout from "./components/Checkout";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/register";
 import Logi from "./pages/login";
+import VolunteerProfile from './pages/VolunteerProfile';
 
 const App = () => {
   return (
@@ -42,8 +43,10 @@ const App = () => {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Logi />} />
-            <Route path="/login" element={<volunteer/>} />
+
+            <Route path="/login" element={<Logi />} />              
+            <Route path='/Profile' element={<VolunteerProfile />} />
+
           </Routes>
           <Footer />
         </BrowserRouter>
