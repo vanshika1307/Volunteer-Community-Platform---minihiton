@@ -50,6 +50,7 @@ const Header = () => {
     { name: "Map", path: "/map" },
     { name: "Event Calendar", path: "/eventcalendar" },
     { name: "Donate", path: "/donate" },
+    { name: "Login", path: "/login" },
   ];
 
   const dropdownItems = [
