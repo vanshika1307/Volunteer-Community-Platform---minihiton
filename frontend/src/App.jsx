@@ -12,6 +12,7 @@ import EducationTraining from './pages/EducationTraining';
 import DonationPage from './pages/DonationPage';
 import EventNotifications from './components/EventNotifications';
 import Checkout from './components/Checkout';
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
@@ -34,6 +35,8 @@ const App = () => {
               <Route path="/edu" element={<EducationTraining />} />
               <Route path="/donate" element={<DonationPage />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path='/Dashboard' element={<Dashboard />} />
+
             </Routes>
           <Footer />
         </BrowserRouter>
