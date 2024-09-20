@@ -5,6 +5,13 @@ import ColorModeProvider from './utils/ColorModeProvider';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import VolunteerMap from './pages/VolunteerMap';
+import EventCalendar from './pages/EventCalendar';
+import CommunityDashBoard from './pages/CommunityDashboard';
+import EducationTraining from './pages/EducationTraining';
+import DonationPage from './pages/DonationPage';
+import EventNotifications from './components/EventNotifications';
+import Checkout from './components/Checkout';
 
 const App = () => {
   return (
@@ -19,11 +26,15 @@ const App = () => {
       }}>
         <BrowserRouter>
           <Header />
-          <Box component="main" sx={{ flexGrow: 1, py: 3 }}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/map" element={<VolunteerMap />} />
+              <Route path="/cal" element={<EventCalendar />} />
+              <Route path="/comdash" element={<CommunityDashBoard />} />
+              <Route path="/edu" element={<EducationTraining />} />
+              <Route path="/donate" element={<DonationPage />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Routes>
-          </Box>
           <Footer />
         </BrowserRouter>
       </Box>

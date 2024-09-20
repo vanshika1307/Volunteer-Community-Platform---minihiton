@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { ColorModeContext } from "../utils/ColorModeProvider";
+import EventNotifications from './EventNotifications';
 
 const Header = () => {
   const theme = useTheme();
@@ -24,7 +25,7 @@ const Header = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
+      transition: { 
         type: "spring",
         stiffness: 50,
         damping: 20,
@@ -144,6 +145,9 @@ const Header = () => {
                   <Brightness4 />
                 )}
               </IconButton>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+                <EventNotifications/>
             </motion.div>
           </Toolbar>
         </Container>

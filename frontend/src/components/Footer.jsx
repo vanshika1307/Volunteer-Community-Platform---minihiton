@@ -44,7 +44,6 @@ const Footer = () => {
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#f5f5f5',
         borderRadius: '20px 20px 0 0',
         padding: '2rem 0',
-        marginTop: '2rem'
       }}
     >
       <Container maxWidth="lg">
