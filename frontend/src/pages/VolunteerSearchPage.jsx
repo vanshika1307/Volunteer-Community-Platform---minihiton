@@ -216,7 +216,7 @@ const VolunteerSearchPage = () => {
 
   const handleSignUp = (id) => {
   
-  navigate("/session-timed-out");
+  navigate("/volsignup");
     // Here you would typically handle the sign-up process
   };
 

@@ -17,6 +17,8 @@ import Register from "./pages/register";
 import Logi from "./pages/login";
 import VolunteerProfile from './pages/VolunteerProfile';
 import VolunteerSearchPage from './pages/VolunteerSearchPage'
+import VolunteerSignUpForm from "./components/VolunteerSignUpForm";
+import VolunteerConfirmationPage from "./components/VolunteerConfirmationPage";
 
 const App = () => {
   return (
@@ -47,6 +49,8 @@ const App = () => {
             <Route path="/vol" element={<VolunteerSearchPage />} />
             <Route path="/login" element={<Logi />} />              
             <Route path='/Profile' element={<VolunteerProfile />} />
+            <Route path='/volsignup' element={<VolunteerSignUpForm />} />
+            <Route path='/confirmation' element={<VolunteerConfirmationPage />} />
 
           </Routes>
           <Footer />
